@@ -1,150 +1,670 @@
-board = [' ' for x in range(10)]
+print("\t\t\t\t\tPossibility 1:\n\n")
+print("1 ==> X\n2 ==> O\n")
+import numpy as np
+import random
+from time import sleep
+def create_board():
+	return(np.array([[1, 2, 0],
+					[2,1, 0],
+					[0, 0, 0]]))
 
-def insertLetter(letter, pos):
-    board[pos] = letter
+def possibilities(board):
+	l = []
+	
+	for i in range(len(board)):
+		for j in range(len(board)):
+			
+			if board[i][j] == 0:
+				l.append((i, j))
+	return(l)
 
-def spaceIsFree(pos):
-    return board[pos] == ' '
+def random_place(board, player):
+	selection = possibilities(board)
+	current_loc = random.choice(selection)
+	board[current_loc] = player
+	return(board)
 
-def printBoard(board):
-    print('   |   |')
-    print(' ' + board[1] + ' | ' + board[2] + ' | ' + board[3])
-    print('   |   |')
-    print('-----------')
-    print('   |   |')
-    print(' ' + board[4] + ' | ' + board[5] + ' | ' + board[6])
-    print('   |   |')
-    print('-----------')
-    print('   |   |')
-    print(' ' + board[7] + ' | ' + board[8] + ' | ' + board[9])
-    print('   |   |')
+def row_win(board, player):
+	for x in range(len(board)):
+		win = True
+		
+		for y in range(len(board)):
+			if board[x, y] != player:
+				win = False
+				continue
+				
+		if win == True:
+			return(win)
+	return(win)
+
+
+def col_win(board, player):
+	for x in range(len(board)):
+		win = True
+		
+		for y in range(len(board)):
+			if board[y][x] != player:
+				win = False
+				continue
+				
+		if win == True:
+			return(win)
+	return(win)
+
+
+def diag_win(board, player):
+	win = True
+	y = 0
+	for x in range(len(board)):
+		if board[x, x] != player:
+			win = False
+	if win:
+		return win
+	win = True
+	if win:
+		for x in range(len(board)):
+			y = len(board) - 1 - x
+			if board[x, y] != player:
+				win = False
+	return win
+
+
+def evaluate(board):
+	winner = 0
+	
+	for player in [1, 2]:
+		if (row_win(board, player) or
+			col_win(board,player) or
+			diag_win(board,player)):
+				
+			winner = player
+			
+	if np.all(board != 0) and winner == 0:
+		winner = "Game is a Tie"
+	return winner
+
+def play_game():
+	board, winner, counter = create_board(), 0, 1
+	print(board)
+	sleep(2)
+	
+	while winner == 0:
+		for player in [1, 2]:
+			board = random_place(board, player)
+			print("Board after move number " + str(counter))
+			print(board)
+			sleep(2)
+			counter += 1
+			winner = evaluate(board)
+			if winner != 0:
+				break
+	return(winner)
+
+print("Winner is: " + str(play_game()))
+
+print("\n\n\t\t\t\t\tPossibility 2:\n\n")
+print("1 ==> X\n2 ==> O\n")
+import numpy as np
+import random
+from time import sleep
+
+def create_board():
+	return(np.array([[2,1,0],
+					[1,2,0],
+					[0, 0, 0]]))
+
+def possibilities(board):
+	l = []
+	
+	for i in range(len(board)):
+		for j in range(len(board)):
+			
+			if board[i][j] == 0:
+				l.append((i, j))
+	return(l)
+
+def random_place(board, player):
+	selection = possibilities(board)
+	current_loc = random.choice(selection)
+	board[current_loc] = player
+	return(board)
+
+def row_win(board, player):
+	for x in range(len(board)):
+		win = True
+		
+		for y in range(len(board)):
+			if board[x, y] != player:
+				win = False
+				continue
+				
+		if win == True:
+			return(win)
+	return(win)
+
+def col_win(board, player):
+	for x in range(len(board)):
+		win = True
+		
+		for y in range(len(board)):
+			if board[y][x] != player:
+				win = False
+				continue
+				
+		if win == True:
+			return(win)
+	return(win)
+
+def diag_win(board, player):
+	win = True
+	y = 0
+	for x in range(len(board)):
+		if board[x, x] != player:
+			win = False
+	if win:
+		return win
+	win = True
+	if win:
+		for x in range(len(board)):
+			y = len(board) - 1 - x
+			if board[x, y] != player:
+				win = False
+	return win
+
+def evaluate(board):
+	winner = 0
+	
+	for player in [1, 2]:
+		if (row_win(board, player) or
+			col_win(board,player) or
+			diag_win(board,player)):
+				
+			winner = player
+			
+	if np.all(board != 0) and winner == 0:
+		winner = "Game is a Tie"
+	return winner
+
+def play_game():
+	board, winner, counter = create_board(), 0, 1
+	print(board)
+	sleep(2)
+	
+	while winner == 0:
+		for player in [1, 2]:
+			board = random_place(board, player)
+			print("Board after move number " + str(counter))
+			print(board)
+			sleep(2)
+			counter += 1
+			winner = evaluate(board)
+			if winner != 0:
+				break
+	return(winner)
+
+print("Winner is: " + str(play_game()))
+
+print("\n\n\t\t\t\t\tPossibility 3:\n\n")
+print("1 ==> X\n2 ==> O\n")
+
+import numpy as np
+import random
+from time import sleep
+
+def create_board():
+	return(np.array([[2, 1, 0],
+					[2,1, 0],
+					[0, 0, 0]]))
+
+def possibilities(board):
+	l = []
+	
+	for i in range(len(board)):
+		for j in range(len(board)):
+			
+			if board[i][j] == 0:
+				l.append((i, j))
+	return(l)
+
+  
+def random_place(board, player):
+	selection = possibilities(board)
+	current_loc = random.choice(selection)
+	board[current_loc] = player
+	return(board)
+
+def row_win(board, player):
+	for x in range(len(board)):
+		win = True
+		
+		for y in range(len(board)):
+			if board[x, y] != player:
+				win = False
+				continue
+				
+		if win == True:
+			return(win)
+	return(win)
+
+  
+     
+def col_win(board, player):
+	for x in range(len(board)):
+		win = True
+		
+		for y in range(len(board)):
+			if board[y][x] != player:
+				win = False
+				continue
+				
+		if win == True:
+			return(win)
+	return(win)
+
+def diag_win(board, player):
+	win = True
+	y = 0
+	for x in range(len(board)):
+		if board[x, x] != player:
+			win = False
+	if win:
+		return win
+	win = True
+	if win:
+		for x in range(len(board)):
+			y = len(board) - 1 - x
+			if board[x, y] != player:
+				win = False
+	return win
+
+   
+     
+def evaluate(board):
+	winner = 0
+	
+	for player in [1, 2]:
+		if (row_win(board, player) or
+			col_win(board,player) or
+			diag_win(board,player)):
+				
+			winner = player
+			
+	if np.all(board != 0) and winner == 0:
+		winner = "Game is a Tie"
+	return winner
+
+     
+def play_game():
+	board, winner, counter = create_board(), 0, 1
+	print(board)
+	sleep(2)
+	
+	while winner == 0:
+		for player in [1, 2]:
+			board = random_place(board, player)
+			print("Board after move number " + str(counter))
+			print(board)
+			sleep(2)
+			counter += 1
+			winner = evaluate(board)
+			if winner != 0:
+				break
+	return(winner)
+
+     
+print("Winner is: " + str(play_game()))
+print("\n\n\t\t\t\t\tPossibility 4:\n\n")
+print("1 ==> X\n2 ==> O\n")
+     
+     
+
+     
+import numpy as np
+import random
+from time import sleep
+
     
-def isWinner(bo, le):
-    return (bo[7] == le and bo[8] == le and bo[9] == le) or (bo[4] == le and bo[5] == le and bo[6] == le) or(bo[1] == le and bo[2] == le and bo[3] == le) or(bo[1] == le and bo[4] == le and bo[7] == le) or(bo[2] == le and bo[5] == le and bo[8] == le) or(bo[3] == le and bo[6] == le and bo[9] == le) or(bo[1] == le and bo[5] == le and bo[9] == le) or(bo[3] == le and bo[5] == le and bo[7] == le)
+def create_board():
+	return(np.array([[1, 2, 0],
+					[1,2, 0],
+					[0, 0, 0]]))
 
-def playerMove():
-    possibleMoves = [x for x, letter in enumerate(board) if letter == ' ' and x != 0]
-    move = 0
+ 
+def possibilities(board):
+	l = []
+	
+	for i in range(len(board)):
+		for j in range(len(board)):
+			
+			if board[i][j] == 0:
+				l.append((i, j))
+	return(l)
 
-    for let in ['X','O']:
-        for i in possibleMoves:
-            boardCopy = board[:]
-            boardCopy[i] = let
-            if isWinner(boardCopy, let):
-                move = i
-                return move
+  
+def random_place(board, player):
+	selection = possibilities(board)
+	current_loc = random.choice(selection)
+	board[current_loc] = player
+	return(board)
 
-    cornersOpen = []
-    for i in possibleMoves:
-        if i in [1,3,7,9]:
-            cornersOpen.append(i)
-            
-    if len(cornersOpen) > 0:
-        move = selectRandom(cornersOpen)
-        return move
+  
+     
+def row_win(board, player):
+	for x in range(len(board)):
+		win = True
+		
+		for y in range(len(board)):
+			if board[x, y] != player:
+				win = False
+				continue
+				
+		if win == True:
+			return(win)
+	return(win)
 
-    if 5 in possibleMoves:
-        move = 5
-        return move
+  
+     
+def col_win(board, player):
+	for x in range(len(board)):
+		win = True
+		
+		for y in range(len(board)):
+			if board[y][x] != player:
+				win = False
+				continue
+				
+		if win == True:
+			return(win)
+	return(win)
 
-    edgesOpen = []
-    for i in possibleMoves:
-        if i in [2,4,6,8]:
-            edgesOpen.append(i)
-            
-    if len(edgesOpen) > 0:
-        move = selectRandom(edgesOpen)
-        
-    return move
+  
+     
+def diag_win(board, player):
+	win = True
+	y = 0
+	for x in range(len(board)):
+		if board[x, x] != player:
+			win = False
+	if win:
+		return win
+	win = True
+	if win:
+		for x in range(len(board)):
+			y = len(board) - 1 - x
+			if board[x, y] != player:
+				win = False
+	return win
 
-            
+   
+     
+def evaluate(board):
+	winner = 0
+	
+	for player in [1, 2]:
+		if (row_win(board, player) or
+			col_win(board,player) or
+			diag_win(board,player)):
+				
+			winner = player
+			
+	if np.all(board != 0) and winner == 0:
+		winner = "Game is a Tie"
+	return winner
 
-def compMove():
-    possibleMoves = [x for x, letter in enumerate(board) if letter == ' ' and x != 0]
-    move = 0
+     
+def play_game():
+	board, winner, counter = create_board(), 0, 1
+	print(board)
+	sleep(2)
+	
+	while winner == 0:
+		for player in [1, 2]:
+			board = random_place(board, player)
+			print("Board after move number " + str(counter))
+			print(board)
+			sleep(2)
+			counter += 1
+			winner = evaluate(board)
+			if winner != 0:
+				break
+	return(winner)
 
-    for let in ['O', 'X']:
-        for i in possibleMoves:
-            boardCopy = board[:]
-            boardCopy[i] = let
-            if isWinner(boardCopy, let):
-                move = i
-                return move
+     
+print("Winner is: " + str(play_game()))
+print("\n\n\t\t\t\t\tPossibility 5:\n\n")
+print("1 ==> X\n2 ==> O\n")
+     
+     
 
-    cornersOpen = []
-    for i in possibleMoves:
-        if i in [1,3,7,9]:
-            cornersOpen.append(i)
-            
-    if len(cornersOpen) > 0:
-        move = selectRandom(cornersOpen)
-        return move
+     
+import numpy as np
+import random
+from time import sleep
 
-    if 5 in possibleMoves:
-        move = 5
-        return move
-
-    edgesOpen = []
-    for i in possibleMoves:
-        if i in [2,4,6,8]:
-            edgesOpen.append(i)
-            
-    if len(edgesOpen) > 0:
-        move = selectRandom(edgesOpen)
-        
-    return move
-
-def selectRandom(li):
-    import random
-    ln = len(li)
-    r = random.randrange(0,ln)
-    return li[r]
     
+def create_board():
+	return(np.array([[2, 2, 0],
+					[1,1, 0],
+					[0, 0, 0]]))
 
-def isBoardFull(board):
-    if board.count(' ') > 1:
-        return False
-    else:
-        return True
+ 
+def possibilities(board):
+	l = []
+	
+	for i in range(len(board)):
+		for j in range(len(board)):
+			
+			if board[i][j] == 0:
+				l.append((i, j))
+	return(l)
 
-def main():
-    print('\t\t\t\t\tTic Tac Toe Game')
-    printBoard(board)
+  
+def random_place(board, player):
+	selection = possibilities(board)
+	current_loc = random.choice(selection)
+	board[current_loc] = player
+	return(board)
 
-    while not(isBoardFull(board)):
-        if not(isWinner(board, 'O')):
-            move = playerMove()
-            if move == 0:
-                print('It`s a Tie!')
-            else:
-                insertLetter('X', move)
-                print('Computer player 1 marked an \'X\' at position', move , ':')
-                printBoard(board)
-            printBoard(board)
-        else:
-            print('Congratulations! \'O\' won the game!')
-            break
+  
+     
+def row_win(board, player):
+	for x in range(len(board)):
+		win = True
+		
+		for y in range(len(board)):
+			if board[x, y] != player:
+				win = False
+				continue
+				
+		if win == True:
+			return(win)
+	return(win)
 
-        if not(isWinner(board, 'X')):
-            move = compMove()
-            if move == 0:
-                print('It`s a Tie!')
-            else:
-                insertLetter('O', move)
-                print('Computer player 2 marked an \'O\' at position', move , ':')
-                printBoard(board)
-        else:
-            print('X won this time! Good Job!')
-            break
+  
+     
+def col_win(board, player):
+	for x in range(len(board)):
+		win = True
+		
+		for y in range(len(board)):
+			if board[y][x] != player:
+				win = False
+				continue
+				
+		if win == True:
+			return(win)
+	return(win)
 
-    if isBoardFull(board):
-        print('It`s a Tie!')
+  
+     
+def diag_win(board, player):
+	win = True
+	y = 0
+	for x in range(len(board)):
+		if board[x, x] != player:
+			win = False
+	if win:
+		return win
+	win = True
+	if win:
+		for x in range(len(board)):
+			y = len(board) - 1 - x
+			if board[x, y] != player:
+				win = False
+	return win
 
-while True:
-    answer = input('Do you want to start playing? (Y/N): ')
-    if answer.lower() == 'y' or answer.lower == 'yes':
-        board = [' ' for x in range(10)]
-        print('----------------------------------------------------------------------------------------')
-        main()
-    else:
-        break
+   
+     
+def evaluate(board):
+	winner = 0
+	
+	for player in [1, 2]:
+		if (row_win(board, player) or
+			col_win(board,player) or
+			diag_win(board,player)):
+				
+			winner = player
+			
+	if np.all(board != 0) and winner == 0:
+		winner = "Game is a Tie"
+	return winner
+
+     
+def play_game():
+	board, winner, counter = create_board(), 0, 1
+	print(board)
+	sleep(2)
+	
+	while winner == 0:
+		for player in [1, 2]:
+			board = random_place(board, player)
+			print("Board after move number " + str(counter))
+			print(board)
+			sleep(2)
+			counter += 1
+			winner = evaluate(board)
+			if winner != 0:
+				break
+	return(winner)
+
+     
+print("Winner is: " + str(play_game()))
+print("\n\n\t\t\t\t\tPossibility 6:\n\n")
+print("1 ==> X\n2 ==> O\n")
+     
+     
+
+     
+import numpy as np
+import random
+from time import sleep
+
+    
+def create_board():
+	return(np.array([[1, 1, 0],
+					[2,2, 0],
+					[0, 0, 0]]))
+
+ 
+def possibilities(board):
+	l = []
+	
+	for i in range(len(board)):
+		for j in range(len(board)):
+			
+			if board[i][j] == 0:
+				l.append((i, j))
+	return(l)
+
+  
+def random_place(board, player):
+	selection = possibilities(board)
+	current_loc = random.choice(selection)
+	board[current_loc] = player
+	return(board)
+
+  
+     
+def row_win(board, player):
+	for x in range(len(board)):
+		win = True
+		
+		for y in range(len(board)):
+			if board[x, y] != player:
+				win = False
+				continue
+				
+		if win == True:
+			return(win)
+	return(win)
+
+  
+     
+def col_win(board, player):
+	for x in range(len(board)):
+		win = True
+		
+		for y in range(len(board)):
+			if board[y][x] != player:
+				win = False
+				continue
+				
+		if win == True:
+			return(win)
+	return(win)
+
+  
+     
+def diag_win(board, player):
+	win = True
+	y = 0
+	for x in range(len(board)):
+		if board[x, x] != player:
+			win = False
+	if win:
+		return win
+	win = True
+	if win:
+		for x in range(len(board)):
+			y = len(board) - 1 - x
+			if board[x, y] != player:
+				win = False
+	return win
+
+   
+     
+def evaluate(board):
+	winner = 0
+	
+	for player in [1, 2]:
+		if (row_win(board, player) or
+			col_win(board,player) or
+			diag_win(board,player)):
+				
+			winner = player
+			
+	if np.all(board != 0) and winner == 0:
+		winner = "Game is a Tie"
+	return winner
+
+     
+def play_game():
+	board, winner, counter = create_board(), 0, 1
+	print(board)
+	sleep(2)
+	
+	while winner == 0:
+		for player in [1, 2]:
+			board = random_place(board, player)
+			print("Board after move number " + str(counter))
+			print(board)
+			sleep(2)
+			counter += 1
+			winner = evaluate(board)
+			if winner != 0:
+				break
+	return(winner)
+
+     
+print("Winner is: " + str(play_game()))
+
